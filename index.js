@@ -2,9 +2,19 @@
 const mongoose = require("mongoose")
 const express = require("express")
 const app = express()
+require('dotenv').config()
+
+const{
+    DB_USERNAME,
+    DB_PASSWORD,
+    DB_HOST,
+    DB_NAME,
+} = process.env
+const url = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}${DB_NAME}`
 
 
-const url = "mongodb+srv://Rodolfo:hijomayor13@kodemia.ke4b4wx.mongodb.net/kodemia"
+
+
 mongoose.connect(url)
 
 .then(()=>{
