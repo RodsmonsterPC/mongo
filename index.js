@@ -99,6 +99,36 @@ app.get("/koders/:id", async (request, response)=>{
     }
 })
 
+app.put("/koders/:id", async (request, response)=>{
+
+    const {params} = request
+    const {body} = request
+    try{
+        const koder = await Koder.findByIdAndUpdate(params.id, {$set:body}).then(()=>{
+            Koder.findById(params.id).then((koder)=> {
+                response.status(201)
+            response.json({
+                success: true,
+                data:{
+                    koder
+                }
+            })
+            })
+        })
+        
+            
+                    
+        
+    }catch(err){
+        console.log(err, "Koder no encontrado")
+        response.status(404)
+        response.json({
+            success: false,
+            message:err.message
+        })
+    }
+})
+
 mongoose.connect(url)
 
 
