@@ -75,9 +75,7 @@ app.get("/koders/:id", async (request, response)=>{
     const {params} = request
     
     try{
-        if(Koder.id !== params.id){
-
-            const koder = await Koder.findById(params.id)
+            const koder = await Koder.findById({_id:params.id})
             response.status(201)
             response.json({
                 success: true,
@@ -85,11 +83,10 @@ app.get("/koders/:id", async (request, response)=>{
                     koder
                 }
             })
-        } else{
-
-            response.json("Koder no encontrado")
+                    
         }
-    }catch(err){
+
+    catch(err){
         console.log(err, "Koder no encontrado")
         response.status(404)
         response.json({
@@ -120,6 +117,32 @@ app.put("/koders/:id", async (request, response)=>{
                     
         
     }catch(err){
+        console.log(err, "Koder no encontrado")
+        response.status(404)
+        response.json({
+            success: false,
+            message:err.message
+        })
+    }
+})
+
+app.delete("/koders/:id", async (request, response)=>{
+
+    const {params} = request
+    
+    try{
+            const koder = await Koder.deleteOne({_id:params.id})
+            response.status(201)
+            response.json({
+                success: true,
+                data:{
+                    koder
+                }
+            })
+                    
+        }
+
+    catch(err){
         console.log(err, "Koder no encontrado")
         response.status(404)
         response.json({
